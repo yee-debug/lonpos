@@ -13,7 +13,6 @@ COS90 = round(COS90, 1)
 # コマの回転、反転をカウント
 rot_counter = 0
 
-obstacles = [-4-3j]  #邪魔オブジェクト
 used_cells = []   #コマオブジェクト
 vacant_cells = {
     -1-1j,-2-1j,-3-1j,-4-1j,-5-1j,-6-1j,
