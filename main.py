@@ -91,67 +91,68 @@ mo = {-1-1j,-2-1j,-3-1j,-4-1j,-5-1j,-6-1j,
 # 紅色右上
 def koma():
     if 紅stop == True:
-        print(name)  # 名前確認
-        a = 紅a
-        b = 紅b
-        rote = 紅rote
+        for a in mo:
+            print(name)  # 名前確認
+            a = a.real
+            b = a.imag
+            rote = 紅rote
 
-        pp = -a-b*1j
+            pp = -a-b*1j
 
-        pp1 = pp + 1  # コマの玉の数を確認
-        pp2 = pp + 1 - 1j
-        pp3 = pp + 1j
-        pp4 = pp + 1j - 1
+            pp1 = pp + 1  # コマの玉の数を確認
+            pp2 = pp + 1 - 1j
+            pp3 = pp + 1j
+            pp4 = pp + 1j - 1
 
-        while rot_counter != 8: # 左右対称コマなら3
+            while rot_counter != 8: # 左右対称コマなら3
 
-            if rot_counter == rote + 1:
-                break
+                if rot_counter == rote + 1:
+                    break
 
-            # 90度回転
-            elif 1<= rot_counter <=3 or 5 <= rot_counter <=7:
-                pp1 = (COS90 + SIN90*1j)*(pp1 - pp) + pp
-                pp2 = (COS90 + SIN90*1j)*(pp2 - pp) + pp
-                pp3 = (COS90 + SIN90*1j)*(pp3 - pp) + pp
-                pp4 = (COS90 + SIN90*1j)*(pp4 - pp) + pp
+                # 90度回転
+                elif 1<= rot_counter <=3 or 5 <= rot_counter <=7:
+                    pp1 = (COS90 + SIN90*1j)*(pp1 - pp) + pp
+                    pp2 = (COS90 + SIN90*1j)*(pp2 - pp) + pp
+                    pp3 = (COS90 + SIN90*1j)*(pp3 - pp) + pp
+                    pp4 = (COS90 + SIN90*1j)*(pp4 - pp) + pp
 
-            # 左右反転
-            elif rot_counter == 4:  #左右対称コマなら消す
-                pp1 = pp1 - pp
-                pp1 = -pp1.conjugate() + pp
-                pp2 = pp2 - pp
-                pp2 = -pp2.conjugate() + pp
-                pp3 = pp3 - pp
-                pp3 = -pp3.conjugate() + pp
-                pp4 = pp4 - pp
-                pp4 = -pp4.conjugate() + pp
+                # 左右反転
+                elif rot_counter == 4:  #左右対称コマなら消す
+                    pp1 = pp1 - pp
+                    pp1 = -pp1.conjugate() + pp
+                    pp2 = pp2 - pp
+                    pp2 = -pp2.conjugate() + pp
+                    pp3 = pp3 - pp
+                    pp3 = -pp3.conjugate() + pp
+                    pp4 = pp4 - pp
+                    pp4 = -pp4.conjugate() + pp
 
-            pp5 = [pp,pp1,pp2,pp3,pp4]
+                pp5 = [pp,pp1,pp2,pp3,pp4]
 
-            if rot_counter == rote:
-                print("  " + str(rot_counter) + "回" + "_" + str(pp5))
+                if rot_counter == rote:
+                    print("  " + str(rot_counter) + "回" + "_" + str(pp5))
 
-            rot_counter += 1
+                rot_counter += 1
 
-            if rot_counter == rote + 1:
-                if not set(ko).isdisjoint(pp5):
-                    x = set(ko) & set(pp5)
-                    print("【ko不可】" + str(x))
-                    #sys.exit()
-                    #pass
+                if rot_counter == rote + 1:
+                    if not set(ko).isdisjoint(pp5):
+                        x = set(ko) & set(pp5)
+                        print("【ko不可】" + str(x))
+                        #sys.exit()
+                        #pass
 
-                elif not set(pp5).isdisjoint(jo):
-                    print("【jo不可】")
-                    #sys.exit()
-                    #pass
+                    elif not set(pp5).isdisjoint(jo):
+                        print("【jo不可】")
+                        #sys.exit()
+                        #pass
 
-                else:
-                    print("  紅色のPPは" + str(pp))
+                    else:
+                        print("  紅色のPPは" + str(pp))
 
-        ko.extend(pp5)
-        mo = list(set(mo) - set(ko))
+            ko.extend(pp5)
+            mo = list(set(mo) - set(ko))
 
-        rot_counter = 0
+            rot_counter = 0
     else:
         pass
 
