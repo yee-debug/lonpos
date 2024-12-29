@@ -1,21 +1,17 @@
-#%%
+#%%　import
 import sys  # 停止コマンド
-
-#%%
-# 複素数平面で回転する計算
 import math
-sin90 = math.sin(math.radians(90))
-cos90 = math.cos(math.radians(90))
 
-#%%
-#無理数をまとめる
-sin90 = round(sin90, 1)
-cos90 = round(cos90, 1)
+#%%　定数の定義
+# 複素数平面で回転する計算
+SIN90 = math.sin(math.radians(90))
+COS90 = math.cos(math.radians(90))
+SIN90 = round(SIN90, 1)
+COS90 = round(COS90, 1)
 
 #%%
 # コマの回転、反転をカウント
-rotecounter = 0
-
+rot_counter = 0
 
 
 jo = [-4-3j]  #邪魔オブジェクト
@@ -107,20 +103,20 @@ def koma():
         pp3 = pp + 1j
         pp4 = pp + 1j - 1
 
-        while rotecounter != 8: # 左右対称コマなら3
+        while rot_counter != 8: # 左右対称コマなら3
 
-            if rotecounter == rote + 1:
+            if rot_counter == rote + 1:
                 break
 
             # 90度回転
-            elif 1<= rotecounter <=3 or 5 <= rotecounter <=7:
-                pp1 = (cos90 + sin90*1j)*(pp1 - pp) + pp
-                pp2 = (cos90 + sin90*1j)*(pp2 - pp) + pp
-                pp3 = (cos90 + sin90*1j)*(pp3 - pp) + pp
-                pp4 = (cos90 + sin90*1j)*(pp4 - pp) + pp
+            elif 1<= rot_counter <=3 or 5 <= rot_counter <=7:
+                pp1 = (COS90 + SIN90*1j)*(pp1 - pp) + pp
+                pp2 = (COS90 + SIN90*1j)*(pp2 - pp) + pp
+                pp3 = (COS90 + SIN90*1j)*(pp3 - pp) + pp
+                pp4 = (COS90 + SIN90*1j)*(pp4 - pp) + pp
 
             # 左右反転
-            elif rotecounter == 4:  #左右対称コマなら消す
+            elif rot_counter == 4:  #左右対称コマなら消す
                 pp1 = pp1 - pp
                 pp1 = -pp1.conjugate() + pp
                 pp2 = pp2 - pp
@@ -132,12 +128,12 @@ def koma():
 
             pp5 = [pp,pp1,pp2,pp3,pp4]
 
-            if rotecounter == rote:
-                print("  " + str(rotecounter) + "回" + "_" + str(pp5))
+            if rot_counter == rote:
+                print("  " + str(rot_counter) + "回" + "_" + str(pp5))
 
-            rotecounter += 1
+            rot_counter += 1
 
-            if rotecounter == rote + 1:
+            if rot_counter == rote + 1:
                 if not set(ko).isdisjoint(pp5):
                     x = set(ko) & set(pp5)
                     print("【ko不可】" + str(x))
@@ -155,7 +151,7 @@ def koma():
         ko.extend(pp5)
         mo = list(set(mo) - set(ko))
 
-        rotecounter = 0
+        rot_counter = 0
     else:
         pass
 
