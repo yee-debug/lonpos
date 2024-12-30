@@ -98,6 +98,10 @@ vacant_cells = {
     "pos": {0+0j, 0+1j, 1+0j},
     "use": True 
 }
+koma_type_list = [
+    灰koma, 紅koma, 空koma, 黄koma, 緑koma, 肌koma,
+    赤koma, 青koma, 橙koma, 紫koma, 若草koma, 白koma
+]
 
 #%%
 def search_position(vacant_cells, koma):
@@ -116,10 +120,11 @@ def search_position(vacant_cells, koma):
         b = vacant_cell.imag
 
         pp = a + b*1j
-        rel_pos = rel_pos_orig.copy()
+        
         rel_pos_history = []
         for flip in [False, True]:
             for rot in range(4):
+                rel_pos = rel_pos_orig.copy()
                 if flip:
                     rel_pos = set(map(lambda x:-x.conjugate(), rel_pos)) # 実部を反転
                 rel_pos = set(map(lambda x:x*(COS90 + SIN90*1j)**rot, rel_pos)) # 回転
@@ -131,7 +136,7 @@ def search_position(vacant_cells, koma):
                 abs_pos = set(map(lambda x:x+pp, rel_pos)) # 絶対座標に変換
 
                 rel_pos_history.append(rel_pos) # 探索した形・向きを保存
-                                
+            
                 if abs_pos.issubset(vacant_cells):
                     avail_pos.append(abs_pos)
                 else:
@@ -139,4 +144,77 @@ def search_position(vacant_cells, koma):
 
     return avail_pos
 
+def put_koma(vacant_cells, position):
+    if position.issubset(vacant_cells):
+        vacant_cells -= position
+    else:
+        raise Exception("invalid position")
 # %%
+
+# avail_posのうち、3点を通るものを抽出する
+def abst_3point(coord_list):
+    #c = complex(input("数値入力1_"))
+    #d = complex(input("数値入力2_"))
+    if not coord_list:
+        return ap
+    else:    
+        for a in ap:
+            if coord_list[0] in a:
+                if coord_list[1] in a:
+                    if coord_list[2] in a:
+                        return a
+# %%
+def koma_order(a):
+    if a == 0:
+        return 灰set_coordinates
+    elif a == 1:
+        return 紅set_coordinates
+    elif a == 2:
+        return 空set_coordinates
+    elif a == 3:
+       return 黄set_coordinates
+    elif a == 4:
+       return 緑set_coordinates
+    elif a == 5:
+       return 肌set_coordinates
+    elif a == 6:
+       return 赤set_coordinates
+    elif a == 7:
+       return 青set_coordinates
+    elif a == 8:
+       return 橙set_coordinates
+    elif a == 9:
+       return 紫set_coordinates
+    elif a == 10:
+       return 若草set_coordinates
+    elif a == 11:
+       return 白set_coordinates
+ 
+
+#座標入力部
+灰set_coordinates = [-2-3j,-2-5j,-3-4j]
+紅set_coordinates = [-6-3j,-5-4j,-4-5j]
+空set_coordinates = [-3-1j,-1-1j,-1-3j]
+黄set_coordinates = [-1-5j,-2-6j,-3-5j]
+緑set_coordinates = [-4-1j,-6-1j,-7-2j]
+肌set_coordinates = []
+赤set_coordinates = [-2-7j,-4-7j,-3-8j]
+青set_coordinates = [-7-3j,-8-3j,-7-6j]
+橙set_coordinates = [-5-7j,-5-9j,-4-9j]
+紫set_coordinates = [-6-4j,-6-5j,-6-7j]
+若草set_coordinates = [-9-4j,-9-5j,-8-5j]
+白set_coordinates = [-5-5j,-5-6j,-4-6j]
+
+count = -1 # カウントを初期値に
+for koma_type in koma_type_list:
+    print(koma_type["name"] + "のコマを置く")
+
+    count += 1 # １つ下の関数のためにカウントアップ
+    set_coordinates = koma_order(count) # それぞれの色のコマの座標を代入
+    ap= search_position(vacant_cells, koma_type) # 空きマスに対し、そのコマが入るパターンを全探索
+    set_pos = abst_3point(set_coordinates) # ユーザーが入力した座標を通る、コマのパターンを抽出
+    put_koma(vacant_cells, set_pos) # 空きマスからコマの座標を削除
+
+    print(set_pos) # コマを置く場所を表示
+    print("残り"+str(len(vacant_cells))+"マス")
+    print("　")
